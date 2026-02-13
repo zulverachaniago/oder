@@ -1,26 +1,7 @@
 <% content_for :title, "Edit Kategori" %>
-
-<nav class="navbar navbar-expand-lg sticky-top shadow-sm">
-  <div class="container">
-    <%= link_to root_path, class: "navbar-brand d-flex align-items-center fw-bold" do %>
-      <i class="bi bi-fire me-2 text-danger"></i>
-      <span>ZARBA KITCHEN</span>
-    <% end %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto gap-lg-3">
-        <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to "Categories", product_categories_path, class: "nav-link active fw-bold" %></li>
-        <li class="nav-item"><%= link_to "Products", products_path, class: "nav-link" %></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
 <div class="page-header">
   <div class="container">
+    <%= render "layouts/partial/breadcrumb" %>
     <div class="d-flex align-items-center gap-3">
       <%= link_to product_categories_path, class: "btn btn-outline-secondary" do %>
         <i class="bi bi-arrow-left me-2"></i>Kembali

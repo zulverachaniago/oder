@@ -19,6 +19,49 @@ body {
   background-color: var(--bg-gray);
   font-family: 'Segoe UI', sans-serif;
   color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* Breadcrumbs (theme + mobile) */
+.breadcrumb-wrapper {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(139, 0, 0, 0.1);
+}
+.breadcrumb-wrapper .breadcrumb {
+  background: transparent;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+.breadcrumb-wrapper .breadcrumb a {
+  color: var(--primary-red);
+  text-decoration: none;
+}
+.breadcrumb-wrapper .breadcrumb a:hover {
+  text-decoration: underline;
+}
+.breadcrumb-wrapper .breadcrumb-item.active,
+.breadcrumb-wrapper .breadcrumb li:last-child {
+  color: var(--text-muted);
+}
+/* Pemisah " / " (gem tidak pakai class .breadcrumb-item pada li) */
+.breadcrumb-wrapper .breadcrumb li + li::before {
+  content: " / ";
+  color: var(--text-muted);
+  padding: 0 0.35rem;
+}
+@media (max-width: 576px) {
+  .breadcrumb-wrapper .breadcrumb {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+  .breadcrumb-wrapper .breadcrumb-item,
+  .breadcrumb-wrapper .breadcrumb li {
+    max-width: 45%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 /* Welcome Screen (home) */
@@ -105,6 +148,22 @@ body {
   background: var(--primary-red);
   color: white;
 }
+@media (max-width: 768px) {
+  #pills-tab {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    margin: 0 -0.5rem;
+  }
+  #pills-tab .nav-item {
+    flex-shrink: 0;
+  }
+  #menu .d-flex.flex-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 
 /* Modal */
 .modal-content {
@@ -132,6 +191,20 @@ body {
   background: white;
   border-radius: 0 0 50px 50px;
   margin-bottom: 50px;
+}
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 40px 0 30px;
+    border-radius: 0 0 30px 30px;
+    margin-bottom: 30px;
+  }
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  .hero-section .btn-zarba.btn-lg {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
 }
 .badge-promo {
   background-color: var(--primary-red);
@@ -248,6 +321,16 @@ body {
   border-radius: 0 0 50px 50px;
   margin-bottom: 40px;
 }
+@media (max-width: 576px) {
+  .page-header {
+    padding: 30px 0 24px;
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 24px;
+  }
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+}
 
 /* Table container (products index) */
 .table-container {
@@ -256,6 +339,22 @@ body {
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 576px) {
+  .table-container {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .table thead th,
+  .table tbody td {
+    padding: 10px 8px;
+    font-size: 0.875rem;
+  }
+  .action-buttons .btn {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.8rem;
+  }
 }
 .table {
   margin-bottom: 0;
@@ -466,6 +565,16 @@ body {
   padding: 30px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+@media (max-width: 576px) {
+  .form-card {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+  .detail-card {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+}
 .form-card .form-control:focus,
 .form-card .form-select:focus {
   border-color: var(--primary-red);
@@ -489,4 +598,25 @@ body {
 }
 .image-preview-container img {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer (gaya contact, warna tema) */
+.footer-zarba {
+  background: linear-gradient(180deg, var(--primary-red) 0%, #6b0000 100%);
+  margin-top: 4rem;
+}
+.footer-zarba a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.footer-zarba a:hover {
+  color: #fff;
+  opacity: 0.9;
+}
+.footer-zarba-tagline {
+  color: rgba(255, 255, 255, 0.85);
+}
+.footer-zarba-copy {
+  color: rgba(255, 255, 255, 0.75);
 }

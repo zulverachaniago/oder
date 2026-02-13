@@ -1,8 +1,10 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :add_products_breadcrumb, only: %i[ show new edit ]
 
   # GET /products or /products.json
   def index
+    add_breadcrumb "Products"
     @q = policy_scope(Product).ransack(params[:q])
     @ransack_products = @q.result(distinct: true)
     @products = @ransack_products.page(params[:page]).per(2).order(created_at: :desc)
@@ -10,15 +12,19 @@ class ProductsController < ApplicationController
 
   # GET /products/1 or /products/1.json
   def show
+    add_breadcrumb @product.name
   end
 
   # GET /products/new
   def new
+    add_breadcrumb "New"
     @product = Product.new
   end
 
   # GET /products/1/edit
   def edit
+    add_breadcrumb @product.name, product_path(@product)
+    add_breadcrumb "Edit"
     authorize @product
   end
 
@@ -61,10 +67,15 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.friendly.find(params.expect(:id))
-    end
+
+  def add_products_breadcrumb
+    add_breadcrumb "Products", products_path
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.friendly.find(params.expect(:id))
+  end
 
     # Only allow a list of trusted parameters through.
     def product_params

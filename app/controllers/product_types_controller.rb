@@ -1,22 +1,28 @@
 class ProductTypesController < ApplicationController
   before_action :set_product_type, only: %i[ show edit update destroy ]
+  before_action :add_product_types_breadcrumb, only: %i[ show new edit ]
 
   # GET /product_types or /product_types.json
   def index
+    add_breadcrumb "Product Types"
     @product_types = ProductType.all
   end
 
   # GET /product_types/1 or /product_types/1.json
   def show
+    add_breadcrumb @product_type.name
   end
 
   # GET /product_types/new
   def new
+    add_breadcrumb "New"
     @product_type = ProductType.new
   end
 
   # GET /product_types/1/edit
   def edit
+    add_breadcrumb @product_type.name, product_type_path(@product_type)
+    add_breadcrumb "Edit"
   end
 
   # POST /product_types or /product_types.json
@@ -58,8 +64,13 @@ class ProductTypesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product_type
+
+  def add_product_types_breadcrumb
+    add_breadcrumb "Product Types", product_types_path
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product_type
       @product_type = ProductType.friendly.find(params.expect(:id))
     end
 

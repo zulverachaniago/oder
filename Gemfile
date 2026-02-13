@@ -73,3 +73,4 @@ gem 'httparty'
 gem 'devise'
 gem 'rolify'
 gem 'pundit'
+gem "breadcrumbs_on_rails"

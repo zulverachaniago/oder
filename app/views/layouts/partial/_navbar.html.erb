@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand d-flex align-items-center gap-2 text-decoration-none py-0", style: "color: var(--maroon);" do %>
+      <i class="bi bi-fire fs-5 flex-shrink-0" style="color: var(--maroon);"></i>
+      <span class="d-flex flex-column lh-sm">
+        <span class="fw-bold fs-6">ODER</span>
+        <small class="text-muted" style="font-size: 0.7rem;">by Zarba Kitchen</small>
+      </span>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto gap-lg-3 align-items-center">
+        <li class="nav-item">
+          <%= link_to root_path, class: "nav-link fw-bold d-flex align-items-center gap-1" do %>
+            <i class="bi bi-house-door"></i> Home
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-1" href="#menu"><i class="bi bi-list-ul"></i> Menu</a>
+        </li>
+        <% if user_signed_in? && current_user.is_admin? %>
+          <li class="nav-item">
+            <%= link_to product_categories_path, class: "nav-link d-flex align-items-center gap-1" do %>
+              <i class="bi bi-grid-3x3-gap"></i> Kategori
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to product_types_path, class: "nav-link d-flex align-items-center gap-1" do %>
+              <i class="bi bi-tags"></i> Tipe Produk
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to products_path, class: "nav-link d-flex align-items-center gap-1" do %>
+              <i class="bi bi-box-seam"></i> Products
+            <% end %>
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <% if user_signed_in? %>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-zarba btn-sm" %>
+          <% else %>
+            <%= link_to new_user_session_path, class: "btn btn-zarba btn-sm" do %>
+              <i class="bi bi-box-arrow-in-right me-1"></i> Login
+            <% end %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

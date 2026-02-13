@@ -1,8 +1,10 @@
 class ProductCategoriesController < ApplicationController
   before_action :set_product_category, only: %i[ show edit update destroy ]
+  before_action :add_product_categories_breadcrumb, only: %i[ show new edit ]
 
   # GET /product_categories or /product_categories.json
   def index
+    add_breadcrumb "Product Categories"
     @q = ProductCategory.ransack(params[:q])
     @product_categories = @q.result(distinct: true).order(created_at: :desc)
     @total_categories = @product_categories.count
@@ -10,15 +12,19 @@ class ProductCategoriesController < ApplicationController
 
   # GET /product_categories/1 or /product_categories/1.json
   def show
+    add_breadcrumb @product_category.name
   end
 
   # GET /product_categories/new
   def new
+    add_breadcrumb "New"
     @product_category = ProductCategory.new
   end
 
   # GET /product_categories/1/edit
   def edit
+    add_breadcrumb @product_category.name, product_category_path(@product_category)
+    add_breadcrumb "Edit"
   end
 
   # POST /product_categories or /product_categories.json
@@ -60,8 +66,13 @@ class ProductCategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product_category
+
+  def add_product_categories_breadcrumb
+    add_breadcrumb "Product Categories", product_categories_path
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product_category
       @product_category = ProductCategory.friendly.find(params.expect(:id))
     end
 
