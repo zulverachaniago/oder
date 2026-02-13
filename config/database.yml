@@ -87,9 +87,9 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: my_project_production
-    username: my_project
-    password: <%= ENV["MY_PROJECT_DATABASE_PASSWORD"] %>
+    database: <%= Rails.application.credentials.dig(:database, :database).presence || "my_project_production" %>
+    username: <%= Rails.application.credentials.dig(:database, :username).presence || "my_project" %>
+    password: <%= Rails.application.credentials.dig(:database, :password).presence || ENV["MY_PROJECT_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: my_project_production_cache
