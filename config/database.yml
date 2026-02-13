@@ -87,18 +87,20 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: <%= Rails.application.credentials.dig(:database, :database).presence || "my_project_production" %>
-    username: <%= Rails.application.credentials.dig(:database, :username).presence || "my_project" %>
-    password: <%= Rails.application.credentials.dig(:database, :password).presence || ENV["MY_PROJECT_DATABASE_PASSWORD"] %>
+    host: <%= Rails.application.credentials.dig(:postgresql, :host).presence %>
+    database: <%= Rails.application.credentials.dig(:postgresql, :database).presence || "my_project_production" %>
+    username: <%= Rails.application.credentials.dig(:postgresql, :username).presence || "my_project" %>
+    password: <%= Rails.application.credentials.dig(:postgresql, :password).presence || ENV["MY_PROJECT_DATABASE_PASSWORD"] %>
+  # Nama database cache/queue/cable mengikuti credentials postgresql.database + _cache, _queue, _cable
   cache:
     <<: *primary_production
-    database: my_project_production_cache
+    database: <%= "#{Rails.application.credentials.dig(:postgresql, :database).presence || 'my_project_production'}_cache" %>
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: my_project_production_queue
+    database: <%= "#{Rails.application.credentials.dig(:postgresql, :database).presence || 'my_project_production'}_queue" %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: my_project_production_cable
+    database: <%= "#{Rails.application.credentials.dig(:postgresql, :database).presence || 'my_project_production'}_cable" %>
     migrations_paths: db/cable_migrate
