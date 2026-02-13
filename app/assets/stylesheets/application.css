@@ -1,10 +1,492 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * Theme global - Oder / Zarba Kitchen
+ * Digunakan di semua halaman (mypages, devise, products, dll).
  */
+
+:root {
+  --maroon: #8B0000;
+  --tomato: #FF6347;
+  --bg-gray: #E9E9E9;
+  --primary-red: #8B0000;
+  --secondary-red: #c2402a;
+  --accent-orange: #FF6347;
+  --bg-light: #E9E9E9;
+  --text-dark: #000000;
+  --text-muted: #565656;
+}
+
+body {
+  background-color: var(--bg-gray);
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--text-dark);
+}
+
+/* Welcome Screen (home) */
+#welcome-screen {
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  transition: 0.5s;
+}
+
+/* Buttons */
+.btn-zarba {
+  background-color: var(--maroon);
+  color: white;
+  padding: 12px 35px;
+  border-radius: 50px;
+  font-weight: bold;
+  border: none;
+}
+.btn-zarba:hover {
+  background-color: var(--tomato);
+  color: white;
+}
+
+/* Menu Card */
+.menu-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: 0.3s;
+  background: white;
+}
+.menu-card:hover {
+  transform: translateY(-5px);
+}
+.price-tag {
+  color: var(--maroon);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.card-img-wrapper {
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #f0f0f0;
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.menu-card:hover .menu-img {
+  transform: scale(1.05);
+}
+.card-img-top {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* Nav pills (tabs) */
+.nav-pills .nav-link {
+  color: var(--text-muted);
+  font-weight: bold;
+  border-radius: 30px;
+}
+.nav-pills .nav-link.active {
+  background: var(--primary-red);
+  color: white;
+}
+
+/* Modal */
+.modal-content {
+  border-radius: 20px;
+  border: none;
+}
+.level-select input-radio:checked + label {
+  background-color: var(--maroon);
+  color: white;
+}
+
+/* Navbar */
+.navbar {
+  background-color: white !important;
+  border-bottom: 2px solid var(--primary-red);
+}
+.navbar-brand span {
+  color: var(--primary-red);
+  font-size: 1.5rem;
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 80px 0;
+  background: white;
+  border-radius: 0 0 50px 50px;
+  margin-bottom: 50px;
+}
+.badge-promo {
+  background-color: var(--primary-red);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.hero-title span {
+  color: var(--primary-red);
+}
+.hero-img {
+  border-radius: 30px;
+  box-shadow: 20px 20px 0px var(--primary-red);
+}
+
+/* Devise (Login / Sign up) */
+.login-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 2.5rem;
+  max-width: 420px;
+}
+.login-title {
+  color: var(--primary-red);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+.login-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+.form-control:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 0.2rem rgba(139, 0, 0, 0.2);
+}
+.login-card .devise-links p {
+  margin-bottom: 0.5rem;
+}
+.login-card .devise-links a {
+  color: var(--primary-red);
+  text-decoration: none;
+  font-weight: 500;
+}
+.login-card .devise-links a:hover {
+  color: var(--tomato);
+  text-decoration: underline;
+}
+#error_explanation {
+  background: #fff5f5;
+  border: 1px solid var(--primary-red);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+#error_explanation h2 {
+  font-size: 1rem;
+  color: var(--primary-red);
+  margin-bottom: 0.5rem;
+}
+#error_explanation ul {
+  margin-bottom: 0;
+  padding-left: 1.25rem;
+}
+.password-wrapper .form-control {
+  padding-right: 3rem;
+}
+.password-wrapper .btn-password-toggle {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  padding: 0.25rem;
+  line-height: 1;
+}
+.password-wrapper .btn-password-toggle:hover {
+  color: var(--primary-red);
+}
+
+/* Floating WhatsApp (contact) */
+.float-wa {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25d366;
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+/* Page header (products index, dll) */
+.page-header {
+  background: white;
+  padding: 60px 0 40px;
+  border-radius: 0 0 50px 50px;
+  margin-bottom: 40px;
+}
+
+/* Table container (products index) */
+.table-container {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+.table {
+  margin-bottom: 0;
+}
+.table thead {
+  background-color: var(--primary-red);
+  color: white;
+}
+.table thead th {
+  border: none;
+  padding: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+.table tbody tr {
+  transition: 0.2s;
+  border-bottom: 1px solid #f0f0f0;
+}
+.table tbody tr:hover {
+  background-color: #fff5f5;
+  transform: scale(1.01);
+}
+.table tbody td {
+  padding: 20px 15px;
+  vertical-align: middle;
+}
+.product-name {
+  color: var(--primary-red);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+.badge-category {
+  background-color: #f0f0f0;
+  color: var(--text-dark);
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.price-value {
+  color: var(--primary-red);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.action-buttons {
+  white-space: nowrap;
+}
+
+/* Pagination */
+.pagination .page-link {
+  color: var(--primary-red);
+  border-color: #dee2e6;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.pagination .page-link:hover {
+  background-color: var(--primary-red);
+  color: white;
+  border-color: var(--primary-red);
+  transform: translateY(-2px);
+}
+.pagination .page-item.active .page-link {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+  color: white;
+  font-weight: 700;
+}
+.pagination .page-item.disabled .page-link {
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+.pagination .page-item.disabled .page-link:hover {
+  transform: none;
+  background-color: #fff;
+  color: var(--text-muted);
+  border-color: #dee2e6;
+}
+
+/* Category / admin cards */
+.category-card {
+  background: white;
+  border: none;
+  border-radius: 20px;
+  transition: 0.3s;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.category-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 5px 20px rgba(139, 0, 0, 0.2);
+}
+.category-name {
+  color: var(--primary-red);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+.category-slug {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: monospace;
+}
+.badge-count {
+  background-color: #f0f0f0;
+  color: var(--text-dark);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.search-box {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+.product-item {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary-red);
+}
+.type-name {
+  color: var(--primary-red);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+/* Detail / show pages */
+.detail-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+.info-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.info-item:last-child {
+  border-bottom: none;
+}
+.info-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+.info-value {
+  color: var(--text-dark);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.price-display {
+  color: var(--primary-red);
+  font-size: 2rem;
+  font-weight: 800;
+}
+.product-image-container {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.product-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+.product-image:hover {
+  transform: scale(1.02);
+}
+.no-image-placeholder {
+  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+  border-radius: 15px;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  border: 2px dashed #ccc;
+}
+.no-image-placeholder i {
+  font-size: 4rem;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+/* Form card (forms) */
+.form-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.form-card .form-control:focus,
+.form-card .form-select:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 0.2rem rgba(139, 0, 0, 0.25);
+}
+.form-card .form-text {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+.input-group-text {
+  background-color: var(--primary-red);
+  color: white;
+  border-color: var(--primary-red);
+  font-weight: 600;
+}
+.image-preview-container {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  display: inline-block;
+}
+.image-preview-container img {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

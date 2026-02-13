@@ -4,6 +4,16 @@ class Product < ApplicationRecord
     belongs_to :product_type
     extend FriendlyId
     friendly_id :random_code, use: :slugged
+
+    after_save :update_signature
+
+    def update_signature
+      return unless signature
+      return unless saved_change_to_signature?
+
+      # Hanya satu produk yang boleh jadi signature: unset yang lain
+      Product.where.not(id: id).update_all(signature: false)
+    end
     
     def random_code
         SecureRandom.hex(4) # Menghasilkan 8 karakter (misal: "a1b2c3d4")
