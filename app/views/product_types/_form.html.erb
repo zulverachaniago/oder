@@ -1,0 +1,72 @@
+<%= form_with(model: product_type, html: { class: "needs-validation", novalidate: true }) do |form| %>
+  <% if product_type.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <h5 class="alert-heading">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        <%= pluralize(product_type.errors.count, "error") %> prohibited this product type from being saved:
+      </h5>
+      <ul class="mb-0">
+        <% product_type.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <div class="form-card">
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <%= form.label :name, "Nama Tipe Produk", class: "form-label fw-bold" %>
+        <%= form.text_field :name, 
+            class: "form-control form-control-lg", 
+            placeholder: "Masukkan nama tipe produk...",
+            required: true %>
+        <div class="form-text">Nama tipe produk akan digunakan untuk mengelompokkan produk</div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <%= form.label :product_category_id, "Kategori Produk", class: "form-label fw-bold" %>
+        <%= form.collection_select :product_category_id, 
+            ProductCategory.order(name: :asc), 
+            :id, 
+            :name,
+            { prompt: "Pilih kategori..." },
+            { class: "form-select form-select-lg", required: true } %>
+        <div class="form-text">Pilih kategori produk untuk tipe ini</div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-3 justify-content-end mt-4">
+      <%= link_to "Batal", product_types_path, class: "btn btn-outline-secondary btn-lg px-4" %>
+      <%= form.submit product_type.persisted? ? "Update Tipe Produk" : "Simpan Tipe Produk", 
+          class: "btn btn-zarba btn-lg px-5" %>
+    </div>
+  </div>
+<% end %>
+
+<style>
+  .form-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-label {
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 0.2rem rgba(139, 0, 0, 0.25);
+  }
+
+  .form-text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+</style>

@@ -1,0 +1,144 @@
+<%= form_with(model: product, html: { class: "needs-validation", novalidate: true }) do |form| %>
+  <% if product.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <h5 class="alert-heading">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        <%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:
+      </h5>
+      <ul class="mb-0">
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <div class="form-card">
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <%= form.label :name, "Nama Produk", class: "form-label fw-bold" %>
+        <%= form.text_field :name, 
+            class: "form-control form-control-lg", 
+            placeholder: "Masukkan nama produk...",
+            required: true %>
+        <div class="form-text">Nama produk akan ditampilkan di menu</div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <%= form.label :price, "Harga", class: "form-label fw-bold" %>
+        <div class="input-group input-group-lg">
+          <span class="input-group-text">Rp</span>
+          <%= form.number_field :price, 
+              class: "form-control", 
+              placeholder: "0",
+              step: 0.01,
+              min: 0,
+              required: true %>
+        </div>
+        <div class="form-text">Harga produk dalam Rupiah</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <%= form.label :product_category_id, "Kategori Produk", class: "form-label fw-bold" %>
+        <%= form.collection_select :product_category_id, 
+            ProductCategory.order(name: :asc), 
+            :id, 
+            :name,
+            { prompt: "Pilih kategori..." },
+            { class: "form-select form-select-lg", required: true } %>
+        <div class="form-text">Pilih kategori produk</div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        <%= form.label :product_type_id, "Tipe Produk", class: "form-label fw-bold" %>
+        <%= form.collection_select :product_type_id, 
+            ProductType.order(name: :asc), 
+            :id, 
+            :name,
+            { prompt: "Pilih tipe..." },
+            { class: "form-select form-select-lg", required: true } %>
+        <div class="form-text">Pilih tipe produk</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :description, "Deskripsi", class: "form-label fw-bold" %>
+      <%= form.text_area :description, 
+          class: "form-control", 
+          rows: 4,
+          placeholder: "Masukkan deskripsi produk..." %>
+      <div class="form-text">Deskripsi produk akan ditampilkan di halaman detail</div>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :image, "Gambar Produk", class: "form-label fw-bold" %>
+      <% if product.image.attached? %>
+        <div class="mb-3">
+          <p class="text-muted small mb-2">Gambar saat ini:</p>
+          <div class="image-preview-container">
+            <%= image_tag product.image, class: "img-thumbnail", style: "max-width: 300px; border-radius: 10px;", alt: product.name %>
+          </div>
+        </div>
+        <div class="form-check mb-2">
+          <%= form.check_box :remove_image, { class: "form-check-input" }, "1", "0" %>
+          <%= form.label :remove_image, "Hapus gambar saat ini", class: "form-check-label text-muted small" %>
+        </div>
+      <% end %>
+      <%= form.file_field :image, class: "form-control", accept: "image/*" %>
+      <div class="form-text">Format: JPG, PNG, atau GIF. Maksimal 5MB</div>
+    </div>
+
+    <div class="d-flex gap-3 justify-content-end mt-4">
+      <%= link_to "Batal", products_path, class: "btn btn-outline-secondary btn-lg px-4" %>
+      <%= form.submit product.persisted? ? "Update Produk" : "Simpan Produk", 
+          class: "btn btn-zarba btn-lg px-5" %>
+    </div>
+  </div>
+<% end %>
+
+<style>
+  .form-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-label {
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 0.2rem rgba(139, 0, 0, 0.25);
+  }
+
+  .form-text {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+
+  .input-group-text {
+    background-color: var(--primary-red);
+    color: white;
+    border-color: var(--primary-red);
+    font-weight: 600;
+  }
+
+  .image-preview-container {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+
+  .image-preview-container img {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+</style>

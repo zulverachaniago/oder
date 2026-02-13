@@ -1,0 +1,23 @@
+<div id="<%= dom_id product %>" class="product-item-card">
+  <div class="d-flex justify-content-between align-items-start">
+    <div class="flex-grow-1">
+      <h5 class="fw-bold mb-1" style="color: var(--primary-red);">
+        <%= product.name.upcase %>
+      </h5>
+      <div class="d-flex gap-2 mb-2">
+        <span class="badge bg-light text-dark">
+          <i class="bi bi-tag me-1"></i><%= product.product_category.name %>
+        </span>
+        <span class="badge bg-light text-dark">
+          <i class="bi bi-grid me-1"></i><%= product.product_type.name %>
+        </span>
+      </div>
+      <% if product.description.present? %>
+        <p class="text-muted small mb-2"><%= truncate(product.description, length: 100) %></p>
+      <% end %>
+      <div class="fw-bold" style="color: var(--primary-red);">
+        Rp <%= number_to_currency(product.price || 0, precision: 0, unit: '', delimiter: '.', separator: ',', format: '%n %u') %>
+      </div>
+    </div>
+  </div>
+</div>

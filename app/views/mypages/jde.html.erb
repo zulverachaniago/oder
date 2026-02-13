@@ -1,0 +1,199 @@
+<style>
+  :root {
+    --primary-red: #8B0000;
+    --secondary-red: #c2402a;
+    --accent-orange: #FF6347;
+    --bg-light: #E9E9E9;
+    --text-dark: #000000;
+    --text-muted: #565656;
+  }
+
+  body {
+    background-color: var(--bg-light);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+  }
+
+  .navbar {
+    background-color: white !important;
+    border-bottom: 2px solid var(--primary-red);
+  }
+
+  .navbar-brand span {
+    color: var(--primary-red);
+    font-size: 1.5rem;
+  }
+
+  .page-header {
+    background: white;
+    padding: 60px 0 40px;
+    border-radius: 0 0 50px 50px;
+    margin-bottom: 40px;
+  }
+
+  .category-card {
+    background: white;
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 20px rgba(139, 0, 0, 0.2);
+  }
+
+  .btn-zarba {
+    background-color: var(--primary-red);
+    color: white;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: bold;
+    border: none;
+  }
+
+  .btn-zarba:hover {
+    background-color: var(--secondary-red);
+    color: white;
+  }
+
+  .search-box {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+
+  .table-container {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+  }
+
+  .table {
+    margin-bottom: 0;
+  }
+
+  .table thead {
+    background-color: var(--primary-red);
+    color: white;
+  }
+
+  .table thead th {
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+
+  .table tbody tr {
+    transition: 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .table tbody tr:hover {
+    background-color: #fff5f5;
+    transform: scale(1.01);
+  }
+
+  .table tbody td {
+    padding: 20px 15px;
+    vertical-align: middle;
+  }
+
+  .category-name {
+    color: var(--primary-red);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+  }
+
+  .category-slug {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-family: monospace;
+  }
+
+  .badge-count {
+    background-color: #f0f0f0;
+    color: var(--text-dark);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .action-buttons {
+    white-space: nowrap;
+  }
+</style>
+
+<% content_for :title, "Product Categories" %>
+
+<% if notice.present? %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 20px; border-radius: 10px;">
+    <i class="bi bi-check-circle me-2"></i><%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand d-flex align-items-center fw-bold" do %>
+      <i class="bi bi-fire me-2 text-danger"></i>
+      <span>ZARBA KITCHEN</span>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto gap-lg-3">
+        <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "Categories", product_categories_path, class: "nav-link active fw-bold" %></li>
+        <li class="nav-item"><%= link_to "Products", products_path, class: "nav-link" %></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div>
+        <h1 class="fw-bold mb-2" style="color: var(--primary-red);">Product Categories</h1>
+        <p class="text-muted mb-0">
+          <i class="bi bi-grid-3x3-gap me-2"></i>
+          Total: <strong><%= @total_categories %></strong> kategori
+        </p>
+      </div>
+      <%= link_to new_product_category_path, class: "btn btn-zarba" do %>
+        <i class="bi bi-plus-circle me-2"></i>Tambah Kategori
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="search-box">
+    <%= form_tag(mypages_jde_path, :method =>"get") do %>
+      <div class="flex-grow-1">
+        <%= search_field_tag :item_number, params[:item_number], placeholder:"Item Number", class:"form-control mb-3", autofocus: true, value:""%>
+      </div>
+      <div class="actions">
+        <%= content_tag(:button,'submit', class:"actions btn btn-primary", type: "submit") %>
+                
+        <%= link_to "Reset", mypages_jde_path, class: "btn btn-outline-secondary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <p><%= @item_number_value %></p>
+  <p><%= @jde_data %></p>
+
+</div>

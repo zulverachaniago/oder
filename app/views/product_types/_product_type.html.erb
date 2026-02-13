@@ -1,0 +1,20 @@
+<div id="<%= dom_id product_type %>" class="product-type-item">
+  <div class="d-flex justify-content-between align-items-start">
+    <div class="flex-grow-1">
+      <h5 class="fw-bold mb-1" style="color: var(--primary-red);">
+        <%= product_type.name.upcase %>
+      </h5>
+      <div class="d-flex gap-2 mb-2">
+        <span class="badge bg-light text-dark">
+          <i class="bi bi-tag me-1"></i><%= product_type.product_category.name %>
+        </span>
+        <span class="badge bg-light text-dark">
+          <i class="bi bi-box-seam me-1"></i><%= product_type.products.count %> produk
+        </span>
+      </div>
+      <small class="text-muted">
+        <code><%= product_type.slug %></code>
+      </small>
+    </div>
+  </div>
+</div>

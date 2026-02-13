@@ -1,0 +1,266 @@
+<style>
+  :root {
+    --primary-red: #8B0000;
+    --secondary-red: #c2402a;
+    --accent-orange: #FF6347;
+    --bg-light: #E9E9E9;
+    --text-dark: #000000;
+    --text-muted: #565656;
+  }
+
+  body {
+    background-color: var(--bg-light);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+  }
+
+  .navbar {
+    background-color: white !important;
+    border-bottom: 2px solid var(--primary-red);
+  }
+
+  .navbar-brand span {
+    color: var(--primary-red);
+    font-size: 1.5rem;
+  }
+
+  .page-header {
+    background: white;
+    padding: 60px 0 40px;
+    border-radius: 0 0 50px 50px;
+    margin-bottom: 40px;
+  }
+
+  .category-card {
+    background: white;
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 20px rgba(139, 0, 0, 0.2);
+  }
+
+  .btn-zarba {
+    background-color: var(--primary-red);
+    color: white;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: bold;
+    border: none;
+  }
+
+  .btn-zarba:hover {
+    background-color: var(--secondary-red);
+    color: white;
+  }
+
+  .search-box {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+
+  .table-container {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+  }
+
+  .table {
+    margin-bottom: 0;
+  }
+
+  .table thead {
+    background-color: var(--primary-red);
+    color: white;
+  }
+
+  .table thead th {
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+
+  .table tbody tr {
+    transition: 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .table tbody tr:hover {
+    background-color: #fff5f5;
+    transform: scale(1.01);
+  }
+
+  .table tbody td {
+    padding: 20px 15px;
+    vertical-align: middle;
+  }
+
+  .category-name {
+    color: var(--primary-red);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+  }
+
+  .category-slug {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-family: monospace;
+  }
+
+  .badge-count {
+    background-color: #f0f0f0;
+    color: var(--text-dark);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  .action-buttons {
+    white-space: nowrap;
+  }
+</style>
+
+<% content_for :title, "Product Categories" %>
+
+<% if notice.present? %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 20px; border-radius: 10px;">
+    <i class="bi bi-check-circle me-2"></i><%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand d-flex align-items-center fw-bold" do %>
+      <i class="bi bi-fire me-2 text-danger"></i>
+      <span>ZARBA KITCHEN</span>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto gap-lg-3">
+        <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "Categories", product_categories_path, class: "nav-link active fw-bold" %></li>
+        <li class="nav-item"><%= link_to "Products", products_path, class: "nav-link" %></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div>
+        <h1 class="fw-bold mb-2" style="color: var(--primary-red);">Product Categories</h1>
+        <p class="text-muted mb-0">
+          <i class="bi bi-grid-3x3-gap me-2"></i>
+          Total: <strong><%= @total_categories %></strong> kategori
+        </p>
+      </div>
+      <%= link_to new_product_category_path, class: "btn btn-zarba" do %>
+        <i class="bi bi-plus-circle me-2"></i>Tambah Kategori
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="search-box">
+    <%= search_form_for(@q, url: product_categories_path, method: :get, html: { class: "d-flex gap-2 align-items-end flex-wrap" }) do |f| %>
+      <div class="flex-grow-1">
+        <%= f.label :name_or_slug_cont, "Cari Kategori", class: "form-label fw-bold mb-2" %>
+        <%= f.search_field :name_or_slug_cont, 
+            class: "form-control form-control-lg", 
+            placeholder: "Masukkan nama kategori...",
+            value: params.dig(:q, :name_or_slug_cont) %>
+      </div>
+      <div>
+        <%= f.submit "Cari", class: "btn btn-zarba btn-lg" %>
+        <%= link_to "Reset", product_categories_path, class: "btn btn-outline-secondary btn-lg" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="product_categories">
+    <% if @product_categories.any? %>
+      <div class="table-container">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 5%;">#</th>
+              <th scope="col" style="width: 25%;">Nama Kategori</th>
+              <th scope="col" style="width: 20%;">Slug</th>
+              <th scope="col" style="width: 15%;" class="text-center">Jumlah Produk</th>
+              <th scope="col" style="width: 15%;" class="text-center">Tanggal Dibuat</th>
+              <th scope="col" style="width: 20%;" class="text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @product_categories.each_with_index do |product_category, index| %>
+              <tr>
+                <td class="fw-bold text-muted"><%= index + 1 %></td>
+                <td>
+                  <div class="category-name"><%= product_category.name %></div>
+                </td>
+                <td>
+                  <div class="category-slug"><%= product_category.slug %></div>
+                </td>
+                <td class="text-center">
+                  <span class="badge-count">
+                    <i class="bi bi-box-seam me-1"></i>
+                    <%= product_category.products.count %>
+                  </span>
+                </td>
+                <td class="text-center text-muted">
+                  <small><%= product_category.created_at.strftime("%d/%m/%Y") %></small>
+                </td>
+                <td class="text-center action-buttons">
+                  <div class="d-flex gap-2 justify-content-center">
+                    <%= link_to product_category, class: "btn btn-sm btn-outline-primary", title: "Lihat Detail" do %>
+                      <i class="bi bi-eye"></i>
+                    <% end %>
+                    <%= link_to edit_product_category_path(product_category), class: "btn btn-sm btn-outline-secondary", title: "Edit" do %>
+                      <i class="bi bi-pencil"></i>
+                    <% end %>
+                    <%= link_to product_category, 
+                        data: { 
+                          turbo_method: :delete,
+                          turbo_confirm: "Apakah Anda yakin ingin menghapus kategori ini?" 
+                        },
+                        class: "btn btn-sm btn-outline-danger", title: "Hapus" do %>
+                      <i class="bi bi-trash"></i>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <div class="text-center py-5">
+        <i class="bi bi-inbox fs-1 text-muted mb-3"></i>
+        <h4 class="text-muted">Tidak ada kategori ditemukan</h4>
+        <p class="text-muted">Mulai dengan menambahkan kategori baru.</p>
+        <%= link_to new_product_category_path, class: "btn btn-zarba" do %>
+          <i class="bi bi-plus-circle me-2"></i>Tambah Kategori Pertama
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

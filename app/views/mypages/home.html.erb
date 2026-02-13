@@ -1,0 +1,290 @@
+<style>
+        :root {
+            --maroon: #8B0000;
+            --tomato: #FF6347;
+            --bg-gray: #E9E9E9;
+            --primary-red: #8B0000;
+            --secondary-red: #c2402a;
+            --accent-orange: #FF6347;
+            --bg-light: #E9E9E9;
+            --text-dark: #000000;
+            --text-muted: #565656;
+        }
+
+        body { background-color: var(--bg-gray); font-family: 'Segoe UI', sans-serif; }
+
+        /* Welcome Screen */
+        #welcome-screen {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: fixed; width: 100%; z-index: 9999; transition: 0.5s;
+        }
+
+        .btn-zarba {
+            background-color: var(--maroon); color: white;
+            padding: 12px 35px; border-radius: 50px; font-weight: bold; border: none;
+        }
+        .btn-zarba:hover { background-color: var(--tomato); color: white; }
+
+        /* Menu Card */
+        .menu-card { border: none; border-radius: 15px; overflow: hidden; transition: 0.3s; background: white; }
+        .menu-card:hover { transform: translateY(-5px); }
+        .price-tag { color: var(--maroon); font-weight: bold; font-size: 1.2rem; }
+        .card-img-wrapper {
+            height: 200px; width: 100%; overflow: hidden; position: relative; background: #f0f0f0;
+            border-radius: 15px 15px 0 0; display: flex; align-items: center; justify-content: center;
+        }
+        .menu-img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; transition: transform 0.3s ease; }
+        .menu-card:hover .menu-img { transform: scale(1.05); }
+        .nav-pills .nav-link { color: var(--text-muted); font-weight: bold; border-radius: 30px; }
+        .nav-pills .nav-link.active { background: var(--primary-red); color: white; }
+
+        /* Modal Styling */
+        .modal-content { border-radius: 20px; border: none; }
+        .level-select input-radio:checked + label { background-color: var(--maroon); color: white; }
+         /* Navbar Customization */
+  .navbar {
+    background-color: white !important;
+    border-bottom: 2px solid var(--primary-red);
+  }
+
+  .navbar-brand span {
+    color: var(--primary-red);
+    font-size: 1.5rem;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding: 80px 0;
+    background: white;
+    border-radius: 0 0 50px 50px;
+    margin-bottom: 50px;
+  }
+  .badge-promo {
+    background-color: var(--primary-red);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+  .hero-title { font-size: 3.5rem; font-weight: 800; line-height: 1.1; }
+  .hero-title span { color: var(--primary-red); }
+  .hero-img { border-radius: 30px; box-shadow: 20px 20px 0px var(--primary-red); }
+    </style>
+
+<div id="welcome-screen">
+    <div class="text-center text-white p-4">
+        <h1 class="display-4 fw-bold mb-3">Daging Empuk, Bumbu Meresap...<br><span style="color: var(--tomato);">Cuma Ada di Sini.</span></h1>
+        <p class="lead mb-4">Selamat datang di <b>Oder</b>. Laper tapi mager? ya Oder aja!</p>
+        <button class="btn btn-zarba btn-lg shadow" onclick="closeWelcomeAndGoToSignature()">Pilih Menu</button>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm">
+  <div class="container flex-nowrap">
+    <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none py-0" href="#" style="color: var(--maroon);">
+      <i class="bi bi-fire fs-5 flex-shrink-0" style="color: var(--maroon);"></i>
+      <span class="d-flex flex-column lh-sm">
+        <span class="fw-bold fs-6">ODER</span>
+        <small class="text-muted" style="font-size: 0.7rem;">by Zarba Kitchen</small>
+      </span>
+    </a>
+    <div class="d-flex align-items-center gap-2">
+      <% if user_signed_in? %>
+        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger btn-sm rounded-pill px-3" %>
+      <% else %>
+        <%= link_to "Login", new_user_session_path, class: "btn btn-outline-danger btn-sm rounded-pill px-3" %>
+      <% end %>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!--<div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto gap-lg-3">
+        <li class="nav-item"><a class="nav-link active fw-bold" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+        <li class="nav-item"><a class="btn btn-zarba btn-sm" href="#">Order Now</a></li>
+      </ul>
+    </div>-->
+  </div>
+</nav>
+
+<% if @signature_product %>
+<header class="hero-section" id="signature">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="badge-promo">Menu Andalan</div>
+        <h1 class="hero-title mb-4"><%= @signature_product.name.upcase %></h1>
+        <p class="lead text-muted mb-4">
+          <%= @signature_product.description %>
+        </p>
+        <div class="d-flex gap-3">
+          <a href="#menu" class="btn btn-zarba btn-lg shadow-lg">Lihat Menu Utama</a>
+          <button class="btn btn-outline-dark rounded-pill px-4"><i class="bi bi-geo-alt me-2"></i>Lokasi</button>
+        </div>
+        <div class="mt-4">
+          <span class="me-3 text-muted"><i class="bi bi-check2-circle text-danger me-1"></i> 100% Halal</span>
+          <span class="text-muted"><i class="bi bi-check2-circle text-danger me-1"></i> Higienis</span>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-5 mt-lg-0">
+        <% if @signature_product.image.attached? %>
+          <%= image_tag @signature_product.image, class: 'img-fluid hero-img', alt: @signature_product.name %>
+        <% else %>
+          <%= image_tag('iga_bakar.png', class: 'img-fluid hero-img', alt: @signature_product.name) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header>
+<% end %>
+
+<section class="container mb-5" id="menu">
+  <div class="d-flex justify-content-between align-items-end mb-5 flex-wrap gap-3">
+    <div>
+      <h2 class="fw-bold mb-0">Menu</h2>
+      <div style="width: 60px; height: 5px; background: var(--primary-red); margin-top: 10px;"></div>
+    </div>
+    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+      <% @product_categories.each_with_index do |product_category, index| %>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link <%= 'active' if index == 0 %>"
+            id="pills-<%= product_category.id %>-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#pills-<%= product_category.id %>"
+            type="button"
+            role="tab"
+            aria-controls="pills-<%= product_category.id %>"
+            aria-selected="<%= index == 0 ? 'true' : 'false' %>">
+            <%= product_category.name.upcase %>
+          </button>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="tab-content" id="pills-tabContent">
+    <% @product_categories.each_with_index do |product_category, index| %>
+      <div
+        class="tab-pane fade <%= 'show active' if index == 0 %>"
+        id="pills-<%= product_category.id %>"
+        role="tabpanel"
+        aria-labelledby="pills-<%= product_category.id %>-tab">
+        <% if product_category.products.any? %>
+          <% product_category.products.group_by(&:product_type).each do |product_type, products| %>
+            <div class="mb-5">
+              <h4 class="fw-bold mb-4 text-uppercase" style="color: var(--primary-red);">
+                <%= product_type.name %>
+              </h4>
+              <div class="row g-4">
+                <% products.each do |product| %>
+                  <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                      <div class="card-img-wrapper">
+                        <% if product.image.attached? %>
+                          <%= image_tag product.image, class: 'card-img-top menu-img', alt: product.name %>
+                        <% else %>
+                          <%= image_tag('iga_bakar.png', class: 'card-img-top menu-img', alt: product.name) %>
+                        <% end %>
+                      </div>
+                      <div class="card-body p-4">
+                        <h5 class="fw-bold"><%= product.name.upcase %></h5>
+                        <p class="text-muted small"><%= product.description %></p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                          <h5 class="mb-0 text-danger fw-bold">Rp <%= number_to_currency(product.price, precision: 0, unit: '', delimiter: '.', separator: ',', format: '%n %u') %></h5>
+                          <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="openOrder('<%= j product.name %>', <%= product.price %>)">Pesan</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-muted text-center py-5">Belum ada produk dalam kategori ini.</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<div class="modal fade" id="orderModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold" id="menuName">Detail Pesanan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label fw-bold">Jumlah:</label>
+          <input type="number" class="form-control rounded-pill" id="qty" value="1" min="1">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Catatan (Opsional):</label>
+          <textarea class="form-control" id="catatan" rows="2" placeholder="Contoh: Pisah sambal, perbanyak kuah..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-zarba w-100" onclick="sendToWA()">Kirim ke WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let selectedMenu = "";
+    let selectedPrice = 0;
+    const myModal = new bootstrap.Modal(document.getElementById('orderModal'));
+
+    function closeWelcome() {
+        document.getElementById('welcome-screen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('welcome-screen').style.display = 'none';
+        }, 500);
+    }
+
+    function closeWelcomeAndGoToSignature() {
+        closeWelcome();
+        setTimeout(() => {
+            var el = document.getElementById('signature');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                document.getElementById('menu').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 550);
+    }
+
+    function openOrder(name, price) {
+        selectedMenu = name;
+        selectedPrice = price;
+        document.getElementById('menuName').innerText = name;
+        myModal.show();
+    }
+
+    function sendToWA() {
+        const qty = document.getElementById('qty').value;
+        const catatan = document.getElementById('catatan').value;
+        const total = selectedPrice * qty;
+
+        const waNumber = "6281294484677"; // GANTI DENGAN NOMOR WA ANDA
+        const text = `Halo Zarba Kitchen, saya mau pesan via *Oder*:%0A%0A` +
+                     `*Menu:* ${selectedMenu}%0A` +
+                     `*Jumlah:* ${qty} porsi%0A` +
+                     `*Catatan:* ${catatan || "-"}%0A%0A` +
+                     `*Total Estimasi:* Rp ${total.toLocaleString('id-ID')}%0A%0A` +
+                     `Mohon diproses ya, terima kasih!`;
+
+        window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
+    }
+</script>

@@ -1,0 +1,286 @@
+<style>
+  :root {
+    --primary-red: #8B0000;
+    --secondary-red: #c2402a;
+    --accent-orange: #FF6347;
+    --bg-light: #E9E9E9;
+    --text-dark: #000000;
+    --text-muted: #565656;
+  }
+
+  body {
+    background-color: var(--bg-light);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+  }
+
+  /* Navbar Customization */
+  .navbar {
+    background-color: white !important;
+    border-bottom: 2px solid var(--primary-red);
+  }
+
+  .navbar-brand span {
+    color: var(--primary-red);
+    font-size: 1.5rem;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding: 80px 0;
+    background: white;
+    border-radius: 0 0 50px 50px;
+    margin-bottom: 50px;
+  }
+
+  .badge-promo {
+    background-color: var(--primary-red);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .hero-title span {
+    color: var(--primary-red);
+  }
+
+  .hero-img {
+    border-radius: 30px;
+    box-shadow: 20px 20px 0px var(--primary-red);
+  }
+
+  /* Menu Section */
+  .menu-card {
+    background: white;
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s;
+    overflow: hidden;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .card-img-wrapper {
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: #f0f0f0;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .menu-card:hover .menu-img {
+    transform: scale(1.05);
+  }
+
+  /* Ensure card image top doesn't have extra spacing */
+  .card-img-top {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .nav-pills .nav-link {
+    color: var(--text-muted);
+    font-weight: bold;
+    border-radius: 30px;
+    padding: 10px 25px;
+  }
+
+  .nav-pills .nav-link.active {
+    background-color: var(--primary-red);
+  }
+
+  /* Floating WhatsApp */
+  .float-wa {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+
+  .btn-zarba {
+    background-color: var(--primary-red);
+    color: white;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: bold;
+    border: none;
+  }
+
+  .btn-zarba:hover {
+    background-color: var(--secondary-red);
+    color: white;
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+      <i class="bi bi-fire me-2 text-danger"></i>
+      <span>ZARBA KITCHEN</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto gap-lg-3">
+        <li class="nav-item"><a class="nav-link active fw-bold" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+        <li class="nav-item"><a class="btn btn-zarba btn-sm" href="#">Order Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="badge-promo">PEDESNYA MURKA!</div>
+        <h1 class="hero-title mb-4">Iga Bakar Karamel <br><span>Zarba Kitchen</span></h1>
+        <p class="lead text-muted mb-4">
+          Rasakan kelezatan iga sapi pilihan yang dipresto sempurna, dibakar dengan bumbu rahasia yang meresap hingga ke
+          tulang. Pilih level pedasmu!
+        </p>
+        <div class="d-flex gap-3">
+          <a href="#menu" class="btn btn-zarba btn-lg shadow-lg">Lihat Menu Utama</a>
+          <button class="btn btn-outline-dark rounded-pill px-4"><i class="bi bi-geo-alt me-2"></i>Lokasi</button>
+        </div>
+        <div class="mt-4">
+          <span class="me-3 text-muted"><i class="bi bi-check2-circle text-danger me-1"></i> 100% Halal</span>
+          <span class="text-muted"><i class="bi bi-check2-circle text-danger me-1"></i> Higienis</span>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-5 mt-lg-0">
+        <%= image_tag('iga_bakar.png', class: 'img-fluid hero-img')%>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="container mb-5" id="menu">
+  <div class="d-flex justify-content-between align-items-end mb-5">
+    <div>
+      <h2 class="fw-bold mb-0">Signature Menu</h2>
+      <div style="width: 60px; height: 5px; background: var(--primary-red); margin-top: 10px;"></div>
+    </div>
+
+    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+    <% @product_categories.each_with_index do |product_category, index| %>
+      <li class="nav-item" role="presentation">
+        <button 
+          class="nav-link <%= 'active' if index == 0 %>" 
+          id="pills-<%= product_category.id %>-tab" 
+          data-bs-toggle="tab" 
+          data-bs-target="#pills-<%= product_category.id %>" 
+          type="button" 
+          role="tab"
+          aria-controls="pills-<%= product_category.id %>"
+          aria-selected="<%= index == 0 ? 'true' : 'false' %>">
+          <%= product_category.name.upcase %>
+        </button>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="tab-content" id="pills-tabContent">
+    <% @product_categories.each_with_index do |product_category, index| %>
+      <div 
+        class="tab-pane fade <%= 'show active' if index == 0 %>" 
+        id="pills-<%= product_category.id %>" 
+        role="tabpanel"
+        aria-labelledby="pills-<%= product_category.id %>-tab">
+        <% if product_category.products.any? %>
+          <% products_by_type = product_category.products.group_by(&:product_type) %>
+          <% products_by_type.each do |product_type, products| %>
+            <div class="mb-5">
+              <h4 class="fw-bold mb-4 text-uppercase" style="color: var(--primary-red);">
+                <%= product_type.name %>
+              </h4>
+              <div class="row g-4">
+                <% products.each do |product| %>
+                  <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                      <div class="card-img-wrapper">
+                        <% if product.image.attached? %>
+                          <%= image_tag product.image, class: 'card-img-top menu-img', alt: product.name %>
+                        <% else %>
+                          <%= image_tag('iga_bakar.png', class: 'card-img-top menu-img', alt: product.name) %>
+                        <% end %>
+                      </div>
+                      <div class="card-body p-4">
+                        <h5 class="fw-bold"><%= product.name.upcase %></h5>
+                        <p class="text-muted small"><%= product.description %></p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                          <h5 class="mb-0 text-danger fw-bold">Rp <%= number_to_currency(product.price, precision: 0, unit: '', delimiter: '.', separator: ',', format: '%n %u') %></h5>
+                          <%= link_to "Pesan", product_path(product), class: "btn btn-sm btn-outline-danger rounded-pill px-3" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="col-12">
+            <p class="text-muted text-center py-5">Belum ada produk dalam kategori ini.</p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<footer class="bg-dark text-white py-5">
+        <div class="container text-center">
+            <h4 class="fw-bold mb-3">ZARBA KITCHEN</h4>
+            <p class="text-secondary mb-4">Rasakan sensasi iga bakar yang meresap hingga ke tulang.</p>
+            <div class="d-flex justify-content-center gap-3 mb-4">
+                <a href="#" class="text-white fs-4"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-white fs-4"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-white fs-4"><i class="bi bi-tiktok"></i></a>
+            </div>
+            <p class="small text-secondary mb-0">© 2026 Zarba Kitchen. Crafted with Love.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/your_number" class="float-wa">
+        <i class="bi bi-whatsapp"></i>
+    </a>

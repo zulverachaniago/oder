@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oder by Zarba Kitchen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --maroon: #8B0000;
+            --tomato: #FF6347;
+            --bg-gray: #E9E9E9;
+        }
+
+        body { background-color: var(--bg-gray); font-family: 'Segoe UI', sans-serif; }
+
+        /* Welcome Screen */
+        #welcome-screen {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: fixed; width: 100%; z-index: 9999; transition: 0.5s;
+        }
+
+        .btn-zarba {
+            background-color: var(--maroon); color: white;
+            padding: 12px 35px; border-radius: 50px; font-weight: bold; border: none;
+        }
+        .btn-zarba:hover { background-color: var(--tomato); color: white; }
+
+        /* Menu Card */
+        .menu-card { border: none; border-radius: 15px; overflow: hidden; transition: 0.3s; }
+        .menu-card:hover { transform: translateY(-5px); }
+        .price-tag { color: var(--maroon); font-weight: bold; font-size: 1.2rem; }
+
+        /* Modal Styling */
+        .modal-content { border-radius: 20px; border: none; }
+        .level-select input-radio:checked + label { background-color: var(--maroon); color: white; }
+    </style>
+</head>
+<body>
+
+<div id="welcome-screen">
+    <div class="text-center text-white p-4">
+        <h1 class="display-4 fw-bold mb-3">Daging Empuk, Bumbu Meresap...<br><span style="color: var(--tomato);">Cuma Ada di Sini.</span></h1>
+        <p class="lead mb-4">Selamat datang di <b>Oder</b>. Pilih level pedasmu dan nikmati kelezatan Zarba Kitchen.</p>
+        <button class="btn btn-zarba btn-lg shadow" onclick="closeWelcome()">Pilih Menu Iga</button>
+    </div>
+</div>
+
+<nav class="navbar navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#" style="color: var(--maroon);">
+            <i class="bi bi-fire"></i> ODER <small class="text-muted fw-light">by Zarba Kitchen</small>
+        </a>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <div class="row g-4">
+        <div class="col-6 col-md-4">
+            <div class="card menu-card shadow-sm h-100">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=500" class="card-img-top" alt="Iga Bakar">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-1">Iga Bakar Karamel</h6>
+                    <p class="price-tag mb-3">Rp 30.000</p>
+                    <button class="btn btn-outline-danger btn-sm w-100 rounded-pill" onclick="openOrder('Iga Bakar Karamel', 30000)">Order</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card menu-card shadow-sm h-100">
+                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500" class="card-img-top" alt="Ayam Bakar">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-1">Ayam Bakar Madu</h6>
+                    <p class="price-tag mb-3">Rp 20.000</p>
+                    <button class="btn btn-outline-danger btn-sm w-100 rounded-pill" onclick="openOrder('Ayam Bakar Madu', 20000)">Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="orderModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold" id="menuName">Detail Pesanan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Pilih Level Pedas:</label>
+                    <select class="form-select rounded-pill" id="levelPedas">
+                        <option value="Level 1 (Sopan)">🌶️ Level 1 (Sopan)</option>
+                        <option value="Level 2 (Nagih)" selected>🌶️🌶️ Level 2 (Nagih)</option>
+                        <option value="Level 3 (Murka)">🌶️🌶️🌶️ Level 3 (Murka)</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Jumlah:</label>
+                    <input type="number" class="form-control rounded-pill" id="qty" value="1" min="1">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Catatan (Opsional):</label>
+                    <textarea class="form-control" id="catatan" rows="2" placeholder="Contoh: Pisah sambal, perbanyak kuah..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-zarba w-100" onclick="sendToWA()">Kirim ke WhatsApp</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let selectedMenu = "";
+    let selectedPrice = 0;
+    const myModal = new bootstrap.Modal(document.getElementById('orderModal'));
+
+    function closeWelcome() {
+        document.getElementById('welcome-screen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('welcome-screen').style.display = 'none';
+        }, 500);
+    }
+
+    function openOrder(name, price) {
+        selectedMenu = name;
+        selectedPrice = price;
+        document.getElementById('menuName').innerText = name;
+        myModal.show();
+    }
+
+    function sendToWA() {
+        const level = document.getElementById('levelPedas').value;
+        const qty = document.getElementById('qty').value;
+        const catatan = document.getElementById('catatan').value;
+        const total = selectedPrice * qty;
+
+        const waNumber = "6281294484677"; // GANTI DENGAN NOMOR WA ANDA
+        const text = `Halo Zarba Kitchen, saya mau pesan via *Oder*:%0A%0A` +
+                     `*Menu:* ${selectedMenu}%0A` +
+                     `*Level:* ${level}%0A` +
+                     `*Jumlah:* ${qty} porsi%0A` +
+                     `*Catatan:* ${catatan || "-"}%0A%0A` +
+                     `*Total Estimasi:* Rp ${total.toLocaleString('id-ID')}%0A%0A` +
+                     `Mohon diproses ya, terima kasih!`;
+
+        window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
+    }
+</script>
+
+</body>
+</html>

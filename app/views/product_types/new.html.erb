@@ -1,0 +1,89 @@
+<style>
+  :root {
+    --primary-red: #8B0000;
+    --secondary-red: #c2402a;
+    --accent-orange: #FF6347;
+    --bg-light: #E9E9E9;
+    --text-dark: #000000;
+    --text-muted: #565656;
+  }
+
+  body {
+    background-color: var(--bg-light);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+  }
+
+  .navbar {
+    background-color: white !important;
+    border-bottom: 2px solid var(--primary-red);
+  }
+
+  .navbar-brand span {
+    color: var(--primary-red);
+    font-size: 1.5rem;
+  }
+
+  .page-header {
+    background: white;
+    padding: 60px 0 40px;
+    border-radius: 0 0 50px 50px;
+    margin-bottom: 40px;
+  }
+
+  .btn-zarba {
+    background-color: var(--primary-red);
+    color: white;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: bold;
+    border: none;
+  }
+
+  .btn-zarba:hover {
+    background-color: var(--secondary-red);
+    color: white;
+  }
+</style>
+
+<% content_for :title, "Tambah Tipe Produk Baru" %>
+
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand d-flex align-items-center fw-bold" do %>
+      <i class="bi bi-fire me-2 text-danger"></i>
+      <span>ZARBA KITCHEN</span>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto gap-lg-3">
+        <li class="nav-item"><%= link_to "Home", root_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "Categories", product_categories_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "Types", product_types_path, class: "nav-link active fw-bold" %></li>
+        <li class="nav-item"><%= link_to "Products", products_path, class: "nav-link" %></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="d-flex align-items-center gap-3">
+      <%= link_to product_types_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-2"></i>Kembali
+      <% end %>
+      <div>
+        <h1 class="fw-bold mb-2" style="color: var(--primary-red);">
+          <i class="bi bi-plus-circle me-2"></i>Tambah Tipe Produk Baru
+        </h1>
+        <p class="text-muted mb-0">Buat tipe produk baru untuk mengelompokkan produk</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <%= render "form", product_type: @product_type %>
+</div>
