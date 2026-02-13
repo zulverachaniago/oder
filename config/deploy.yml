@@ -20,6 +20,7 @@ servers:
 #
 # Don't use this when deploying to multiple web servers (then you have to terminate SSL at your load balancer).
 #
+# Jika upload gambar di production error "size too large", set batas body di proxy (lihat docs/PRODUCTION_UPLOAD_SIZE.md).
 # proxy:
 #   ssl: true
 #   host: app.example.com
