@@ -2,6 +2,8 @@ class Product < ApplicationRecord
   has_one_attached :image
   belongs_to :product_category
   belongs_to :product_type
+
+  scope :active, -> { where(active: true) }
   extend FriendlyId
   friendly_id :random_code, use: :slugged
 

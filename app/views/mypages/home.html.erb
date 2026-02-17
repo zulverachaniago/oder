@@ -61,8 +61,8 @@
         id="pills-<%= product_category.id %>"
         role="tabpanel"
         aria-labelledby="pills-<%= product_category.id %>-tab">
-        <% if product_category.products.any? %>
-          <% product_category.products.group_by(&:product_type).each do |product_type, products| %>
+        <% if product_category.products.active.any? %>
+          <% product_category.products.active.group_by(&:product_type).each do |product_type, products| %>
             <div class="mb-5">
               <h4 class="fw-bold mb-4 text-uppercase" style="color: var(--primary-red);">
                 <%= product_type.name %>

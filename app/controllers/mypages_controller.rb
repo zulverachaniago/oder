@@ -2,8 +2,8 @@ class MypagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:home]
 
   def home
-    @product_categories = ProductCategory.where(active: true)
-    @signature_product = Product.find_by(signature: true)
+    @product_categories = ProductCategory.all
+    @signature_product = Product.find_by(signature: true, active: true)
   end
 
   def contact
