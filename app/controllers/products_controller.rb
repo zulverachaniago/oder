@@ -47,7 +47,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to @product, notice: "Product was successfully updated.", status: :see_other }
+        format.html { redirect_to (request.referer.presence || @product), notice: "Product was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -79,6 +79,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :name, :product_category_id, :product_type_id, :slug, :description, :price, :image, :signature ])
+      params.expect(product: [ :name, :product_category_id, :product_type_id, :slug, :description, :price, :image, :signature, :active, :sold_out ])
     end
 end

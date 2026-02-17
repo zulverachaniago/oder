@@ -60,6 +60,8 @@
             <th scope="col" style="width: 15%;">Tipe</th>
             <th scope="col" style="width: 15%;" class="text-end">Harga</th>
             <th scope="col" style="width: 10%;" class="text-center">Status</th>
+            <th scope="col" style="width: 10%;" class="text-center">Aktif</th>
+            <th scope="col" style="width: 10%;" class="text-center">Sold Out</th>
             <th scope="col" style="width: 15%;" class="text-center">Aksi</th>
           </tr>
         </thead>
@@ -94,9 +96,25 @@
               </span>
             </td>
             <td class="text-center">
-              <span class="badge bg-success">
-                <i class="bi bi-check-circle me-1"></i>Aktif
+              <span class="badge <%= product.active ? 'bg-success' : 'bg-secondary' %>">
+                <i class="bi bi-check-circle me-1"></i><%= product.active ? 'Aktif' : 'Nonaktif' %>
               </span>
+            </td>
+            <td class="text-center align-middle">
+              <%= form_with model: product, class: "d-inline-block" do |f| %>
+                <div class="form-check form-switch justify-content-center d-flex">
+                  <%= f.check_box :active, class: "form-check-input", role: "switch", id: "product_active_#{product.id}", onchange: "this.form.requestSubmit()" %>
+                  <label class="form-check-label visually-hidden" for="product_active_<%= product.id %>">Aktif</label>
+                </div>
+              <% end %>
+            </td>
+            <td class="text-center align-middle">
+              <%= form_with model: product, class: "d-inline-block" do |f| %>
+                <div class="form-check form-switch justify-content-center d-flex">
+                  <%= f.check_box :sold_out, class: "form-check-input", role: "switch", id: "product_sold_out_#{product.id}", onchange: "this.form.requestSubmit()" %>
+                  <label class="form-check-label visually-hidden" for="product_sold_out_<%= product.id %>">Sold out</label>
+                </div>
+              <% end %>
             </td>
             <td class="text-center action-buttons">
               <div class="d-flex gap-2 justify-content-center">
